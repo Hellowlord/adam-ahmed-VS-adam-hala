@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Support Palestine & Iran</title>
+  <style>
+    :root {
+      --bg-light: #f5f5f5;
+      --text-light: #111;
+      --bg-dark: #111;
+      --text-dark: #f5f5f5;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      background-color: var(--bg-light);
+      color: var(--text-light);
+      transition: background 0.3s, color 0.3s;
+    }
+    .dark-mode {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+    header {
+      padding: 20px;
+      text-align: center;
+      background-color: #222;
+      color: white;
+    }
+    h1 {
+      margin: 10px 0;
+    }
+    .flags {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin: 30px 0;
+    }
+    .flags img {
+      width: 120px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    .content {
+      text-align: center;
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+    }
+    .links a, .donate-btn {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px 20px;
+      text-decoration: none;
+      background-color: #006400;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .qr-code {
+      margin-top: 15px;
+    }
+    .donation-popup {
+      display: none;
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      color: black;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      z-index: 9999;
+    }
+    .donation-popup.active {
+      display: block;
+    }
+    .toggle-btn {
+      position: fixed;
+      top: 15px; right: 15px;
+      background: #444;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .description {
+      background-color: #eee;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px auto;
+      max-width: 800px;
+      color: #333;
+    }
+    .comment-box {
+      text-align: center;
+      margin-top: 30px;
+    }
+    textarea {
+      width: 80%;
+      height: 100px;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    .comment-btn {
+      padding: 10px 20px;
+      background-color: #006400;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .submitted-comments {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 10px;
+      background-color: #f0f0f0;
+      border-radius: 10px;
+    }
+    .submitted-comments div {
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .submitted-comments p {
+      margin: 0;
+      word-break: break-word;
+      flex-grow: 1;
+    }
+    .submitted-comments button {
+      margin-left: 10px;
+      background: #900;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      padding: 4px 8px;
+    }
+  </style>
+</head>
+<body>
+  <button class="toggle-btn" onclick="toggleTheme()">Toggle Light/Dark</button>
+  <header>
+    <h1>✊ Support for Palestine and Iran</h1>
+    <p>Solidarity with the people. Freedom, peace, and justice for all.</p>
+  </header>
+
+  <section class="flags">
+    <div>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/00/Flag_of_Palestine.svg" alt="Palestine Flag" />
+      <p>🇵🇸 Palestine</p>
+    </div>
+    <div>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/Flag_of_Iran.svg" alt="Iran Flag" />
+      <p>🇮🇷 Iran</p>
+    </div>
+  </section>
+
+  <div class="description">
+    <h2>About This Page</h2>
+    <p>This page is built to spread awareness and show support for the people of Palestine and Iran who are facing injustice, hardship, and oppression. By sharing knowledge, supporting humanitarian aid, and standing in solidarity, we amplify their voices.</p>
+  </div>
+
+  <div class="content">
+    <p>We stand united in support of the people of Palestine and Iran. This is a call for justice, peace, and the protection of human rights. May their struggles be heard and may their voices bring change.</p>
+
+    <div class="links">
+      <a href="https://www.un.org/unispal/" target="_blank" rel="noopener">Learn about Palestine</a>
+      <a href="https://en.irna.ir/" target="_blank" rel="noopener">News from Iran</a>
+      <a class="donate-btn" href="https://www.pcrf.net/donate" target="_blank" rel="noopener">💚 Donate Now</a>
+      <a class="donate-btn" href="https://www.irusa.org/" target="_blank" rel="noopener">🤝 Donate via IRUSA</a>
+      <button class="donate-btn" onclick="showDonationPopup()">💳 Custom Donation</button>
+    </div>
+
+    <div class="qr-code">
+      <p>Scan to Donate:</p>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?data=https://www.pcrf.net/donate&size=150x150" alt="QR Code" />
+    </div>
+  </div>
+
+  <div id="donation-popup" class="donation-popup" role="dialog" aria-modal="true" aria-labelledby="donate-title">
+    <h3 id="donate-title">Donate via PayPal / Stripe</h3>
+    <p>Select a method:</p>
+    <a href="https://www.paypal.com/donate/?hosted_button_id=XXXXXXX" target="_blank" rel="noopener">PayPal</a><br />
+    <a href="https://checkout.stripe.com/pay/cs_test_XXXXXXX" target="_blank" rel="noopener">Stripe</a><br /><br />
+    <button onclick="closeDonationPopup()">Close</button>
+  </div>
+
+  <div class="comment-box">
+    <h3>Leave a Comment</h3>
+    <form id="commentForm">
+      <textarea id="commentInput" name="comment" placeholder="Write your thoughts or message here..."></textarea><br />
+      <button class="comment-btn" type="submit">Submit Comment</button>
+    </form>
+  </div>
+
+  <div class="submitted-comments" id="commentsSection">
+    <h3>Comments</h3>
+  </div>
+
+<script>
+  function toggleTheme() {
+    document.body.classList.toggle("dark-mode");
+  }
+
+  function showDonationPopup() {
+    document.getElementById('donation-popup').classList.add('active');
+  }
+
+  function closeDonationPopup() {
+    document.getElementById('donation-popup').classList.remove('active');
+  }
+
+  function loadComments() {
+    fetch('save_comment.php')
+      .then(res => res.json())
+      .then(data => {
+        const section = document.getElementById('commentsSection');
+        section.innerHTML = '<h3>Comments</h3>';
+        data.forEach(comment => {
+          const wrapper = document.createElement('div');
+          const p = document.createElement('p');
+          p.textContent = `[${comment.time}] ${comment.text}`;
+          const del = document.createElement('button');
+          del.textContent = '🗑️ Delete';
+          del.title = 'Delete comment (admin only)';
+          del.onclick = () => deleteComment(comment.id, wrapper);
+          wrapper.appendChild(p);
+          wrapper.appendChild(del);
+          section.appendChild(wrapper);
+        });
+      });
+  }
+
+  function deleteComment(id, element) {
+    fetch('save_comment.php', {
+      method: 'DELETE',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: 'id=' + encodeURIComponent(id)
+    }).then(res => {
+      if (res.ok) {
+        element.remove();
+      } else {
+        alert('Failed to delete comment.');
+      }
+    });
+  }
+
+  document.getElementById('commentForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const input = document.getElementById('commentInput');
+    const commentText = input.value.trim();
+    if (commentText !== '') {
+      fetch('save_comment.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'comment=' + encodeURIComponent(commentText)
+      }).then(response => {
+        if (response.ok) {
+          loadComments();
+          input.value = '';
+        } else {
+          alert('Failed to save comment.');
+        }
+      });
+    } else {
+      alert('Please write something before submitting.');
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', loadComments);
+</script>
+</body>
+</html>

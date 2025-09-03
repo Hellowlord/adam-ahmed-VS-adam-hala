@@ -1,282 +1,299 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Support Palestine & Iran</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Adam Ahmed vs Adam Halawa in Drums</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
   <style>
-    :root {
-      --bg-light: #f5f5f5;
-      --text-light: #111;
-      --bg-dark: #111;
-      --text-dark: #f5f5f5;
+    :root{
+      --bg1:#0f1226;
+      --bg2:#1a1e3a;
+      --accent1:#8a5cff;
+      --accent2:#00e0ff;
+      --accent3:#ff4d8d;
     }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; scroll-behavior: smooth; }
     body {
-      font-family: Arial, sans-serif;
-      margin: 0; padding: 0;
-      background-color: var(--bg-light);
-      color: var(--text-light);
-      transition: background 0.3s, color 0.3s;
+      background: linear-gradient(135deg, var(--bg1), var(--bg2));
+      color: #fff;
+      font-family: "Montserrat", sans-serif;
+      overflow-x: hidden;
     }
-    .dark-mode {
-      background-color: var(--bg-dark);
-      color: var(--text-dark);
-    }
-    header {
-      padding: 20px;
-      text-align: center;
-      background-color: #222;
-      color: white;
-    }
-    h1 {
-      margin: 10px 0;
-    }
-    .flags {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      margin: 30px 0;
-    }
-    .flags img {
-      width: 120px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    }
-    .content {
-      text-align: center;
-      max-width: 800px;
-      margin: auto;
-      padding: 20px;
-    }
-    .links a, .donate-btn {
-      display: inline-block;
-      margin: 10px;
-      padding: 10px 20px;
-      text-decoration: none;
-      background-color: #006400;
-      color: white;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    .qr-code {
-      margin-top: 15px;
-    }
-    .donation-popup {
-      display: none;
+
+    /* Background stars */
+    .stars {
       position: fixed;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      background: white;
-      color: black;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.5);
-      z-index: 9999;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      overflow: hidden;
+      z-index: -2;
     }
-    .donation-popup.active {
+    .stars span {
+      position: absolute;
       display: block;
+      width: 2px;
+      height: 2px;
+      background: white;
+      opacity: 0.8;
+      border-radius: 50%;
+      animation: twinkle 2s infinite ease-in-out alternate;
     }
-    .toggle-btn {
+    @keyframes twinkle {
+      from { opacity: 0.2; }
+      to   { opacity: 1; }
+    }
+
+    /* Glowing rotating squares */
+    .squares {
       position: fixed;
-      top: 15px; right: 15px;
-      background: #444;
-      color: white;
-      border: none;
-      padding: 10px;
-      border-radius: 5px;
-      cursor: pointer;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
     }
-    .description {
-      background-color: #eee;
-      padding: 20px;
-      border-radius: 10px;
-      margin: 20px auto;
-      max-width: 800px;
-      color: #333;
+    .squares div {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      border: 3px solid rgba(255,255,255,0.15);
+      transform: rotate(45deg);
+      animation: floatSquare 20s linear infinite;
     }
-    .comment-box {
+    .squares div:nth-child(1) {
+      top: -50px; left: -50px;
+      animation-duration: 25s;
+    }
+    .squares div:nth-child(2) {
+      top: 200px; right: -80px;
+      animation-duration: 35s;
+    }
+    .squares div:nth-child(3) {
+      bottom: -100px; left: 40%;
+      animation-duration: 30s;
+    }
+    @keyframes floatSquare {
+      from { transform: rotate(0deg) translateY(0); }
+      to   { transform: rotate(360deg) translateY(-50px); }
+    }
+
+    .wrapper {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card {
+      position: relative;
+      padding: 3.5rem 2.25rem;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.07);
       text-align: center;
-      margin-top: 30px;
+      max-width: 900px;
+      width: min(92vw, 900px);
+      margin: 3rem auto;
     }
-    textarea {
-      width: 80%;
-      height: 100px;
-      padding: 10px;
-      margin-bottom: 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
+
+    h1 {
+      margin: 0 0 .6rem 0;
+      font-family: "Playfair Display", serif;
+      font-weight: 900;
+      font-size: clamp(2.2rem, 6vw, 5rem);
+      line-height: 1.05;
     }
-    .comment-btn {
-      padding: 10px 20px;
-      background-color: #006400;
-      color: white;
+
+    .name {
+      display: block;
+      background: linear-gradient(270deg, var(--accent1), var(--accent2), var(--accent3), var(--accent1));
+      background-size: 600% 600%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin: 0.5rem 0;
+      animation: shine 6s linear infinite;
+    }
+    @keyframes shine {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .vs {
+      display: block;
+      font-weight: 700;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: #e8ecff;
+      margin: 0.8rem 0;
+    }
+
+    p.tagline {
+      margin: 1.6rem 0 0;
+    }
+
+    .btn {
+      margin-top: 1rem;
+      padding: 0.9rem 1.8rem;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #fff;
       border: none;
-      border-radius: 6px;
+      border-radius: 14px;
       cursor: pointer;
+      background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
     }
-    .submitted-comments {
+
+    .more-info {
+      padding: 3rem 2rem;
       max-width: 800px;
-      margin: 20px auto;
-      padding: 10px;
-      background-color: #f0f0f0;
-      border-radius: 10px;
+      margin: 0 auto 4rem;
+      text-align: center;
+      background: rgba(255,255,255,0.05);
+      border-radius: 20px;
     }
-    .submitted-comments div {
-      padding: 10px;
-      border-bottom: 1px solid #ccc;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .submitted-comments p {
-      margin: 0;
-      word-break: break-word;
-      flex-grow: 1;
-    }
-    .submitted-comments button {
-      margin-left: 10px;
-      background: #900;
+
+    .like-btn, .dislike-btn, .reset-btn {
+      margin: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
       border: none;
-      color: white;
-      border-radius: 5px;
+      border-radius: 10px;
       cursor: pointer;
-      padding: 4px 8px;
+    }
+
+    .like-btn {
+      background: linear-gradient(90deg, var(--accent2), var(--accent3));
+    }
+
+    .dislike-btn {
+      background: linear-gradient(90deg, #ff0000, #aa0000);
+    }
+
+    .reset-btn {
+      background: linear-gradient(90deg, #555, #222);
     }
   </style>
 </head>
 <body>
-  <button class="toggle-btn" onclick="toggleTheme()">Toggle Light/Dark</button>
-  <header>
-    <h1>✊ Support for Palestine and Iran</h1>
-    <p>Solidarity with the people. Freedom, peace, and justice for all.</p>
-  </header>
+  <!-- Background Effects -->
+  <div class="stars"></div>
+  <div class="squares">
+    <div></div><div></div><div></div>
+  </div>
 
-  <section class="flags">
+  <div class="wrapper">
+    <div class="card">
+      <h1>
+        <span class="name">Adam Ahmed</span>
+        <span class="vs">VS</span>
+        <span class="name">Adam Halawa</span>
+        <div class="vs">in Drums 🥁</div>
+      </h1>
+      <p class="tagline">A showdown in spectacular, shimmering style ✨</p>
+      <a href="#more-info"><button class="btn">More Info</button></a>
+    </div>
+  </div>
+
+  <div id="more-info" class="more-info">
+    <h2>More Information</h2>
+    <p>
+      Adam Ahmed and Adam Halawa are seeing who is better in drums.  
+      Put a like on <strong>Adam Ahmed</strong> if you prefer him,  
+      but put a like on <strong>Adam Halawa</strong> if you prefer him.  
+      You can also dislike if you don’t prefer them.
+    </p>
+
     <div>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/0/00/Flag_of_Palestine.svg" alt="Palestine Flag" />
-      <p>🇵🇸 Palestine</p>
+      <button class="like-btn" onclick="like('ahmed')">👍 Adam Ahmed (<span id="ahmedLikes">0</span>)</button>
+      <button class="dislike-btn" onclick="dislike('ahmed')">👎 (<span id="ahmedDislikes">0</span>)</button>
     </div>
+
     <div>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/Flag_of_Iran.svg" alt="Iran Flag" />
-      <p>🇮🇷 Iran</p>
-    </div>
-  </section>
-
-  <div class="description">
-    <h2>About This Page</h2>
-    <p>This page is built to spread awareness and show support for the people of Palestine and Iran who are facing injustice, hardship, and oppression. By sharing knowledge, supporting humanitarian aid, and standing in solidarity, we amplify their voices.</p>
-  </div>
-
-  <div class="content">
-    <p>We stand united in support of the people of Palestine and Iran. This is a call for justice, peace, and the protection of human rights. May their struggles be heard and may their voices bring change.</p>
-
-    <div class="links">
-      <a href="https://www.un.org/unispal/" target="_blank" rel="noopener">Learn about Palestine</a>
-      <a href="https://en.irna.ir/" target="_blank" rel="noopener">News from Iran</a>
-      <a class="donate-btn" href="https://www.pcrf.net/donate" target="_blank" rel="noopener">💚 Donate Now</a>
-      <a class="donate-btn" href="https://www.irusa.org/" target="_blank" rel="noopener">🤝 Donate via IRUSA</a>
-      <button class="donate-btn" onclick="showDonationPopup()">💳 Custom Donation</button>
+      <button class="like-btn" onclick="like('halawa')">👍 Adam Halawa (<span id="halawaLikes">0</span>)</button>
+      <button class="dislike-btn" onclick="dislike('halawa')">👎 (<span id="halawaDislikes">0</span>)</button>
     </div>
 
-    <div class="qr-code">
-      <p>Scan to Donate:</p>
-      <img src="https://api.qrserver.com/v1/create-qr-code/?data=https://www.pcrf.net/donate&size=150x150" alt="QR Code" />
+    <div>
+      <button class="reset-btn" onclick="resetVotes()">🔄 Reset</button>
     </div>
   </div>
 
-  <div id="donation-popup" class="donation-popup" role="dialog" aria-modal="true" aria-labelledby="donate-title">
-    <h3 id="donate-title">Donate via PayPal / Stripe</h3>
-    <p>Select a method:</p>
-    <a href="https://www.paypal.com/donate/?hosted_button_id=XXXXXXX" target="_blank" rel="noopener">PayPal</a><br />
-    <a href="https://checkout.stripe.com/pay/cs_test_XXXXXXX" target="_blank" rel="noopener">Stripe</a><br /><br />
-    <button onclick="closeDonationPopup()">Close</button>
-  </div>
-
-  <div class="comment-box">
-    <h3>Leave a Comment</h3>
-    <form id="commentForm">
-      <textarea id="commentInput" name="comment" placeholder="Write your thoughts or message here..."></textarea><br />
-      <button class="comment-btn" type="submit">Submit Comment</button>
-    </form>
-  </div>
-
-  <div class="submitted-comments" id="commentsSection">
-    <h3>Comments</h3>
-  </div>
-
-<script>
-  function toggleTheme() {
-    document.body.classList.toggle("dark-mode");
-  }
-
-  function showDonationPopup() {
-    document.getElementById('donation-popup').classList.add('active');
-  }
-
-  function closeDonationPopup() {
-    document.getElementById('donation-popup').classList.remove('active');
-  }
-
-  function loadComments() {
-    fetch('save_comment.php')
-      .then(res => res.json())
-      .then(data => {
-        const section = document.getElementById('commentsSection');
-        section.innerHTML = '<h3>Comments</h3>';
-        data.forEach(comment => {
-          const wrapper = document.createElement('div');
-          const p = document.createElement('p');
-          p.textContent = `[${comment.time}] ${comment.text}`;
-          const del = document.createElement('button');
-          del.textContent = '🗑️ Delete';
-          del.title = 'Delete comment (admin only)';
-          del.onclick = () => deleteComment(comment.id, wrapper);
-          wrapper.appendChild(p);
-          wrapper.appendChild(del);
-          section.appendChild(wrapper);
-        });
-      });
-  }
-
-  function deleteComment(id, element) {
-    fetch('save_comment.php', {
-      method: 'DELETE',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: 'id=' + encodeURIComponent(id)
-    }).then(res => {
-      if (res.ok) {
-        element.remove();
-      } else {
-        alert('Failed to delete comment.');
-      }
-    });
-  }
-
-  document.getElementById('commentForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const input = document.getElementById('commentInput');
-    const commentText = input.value.trim();
-    if (commentText !== '') {
-      fetch('save_comment.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: 'comment=' + encodeURIComponent(commentText)
-      }).then(response => {
-        if (response.ok) {
-          loadComments();
-          input.value = '';
-        } else {
-          alert('Failed to save comment.');
-        }
-      });
-    } else {
-      alert('Please write something before submitting.');
+  <script>
+    // Generate stars dynamically
+    const stars = document.querySelector('.stars');
+    for(let i=0; i<80; i++){
+      const star = document.createElement('span');
+      star.style.top = Math.random() * 100 + "%";
+      star.style.left = Math.random() * 100 + "%";
+      star.style.animationDuration = (Math.random() * 2 + 1) + "s";
+      stars.appendChild(star);
     }
-  });
 
-  document.addEventListener('DOMContentLoaded', loadComments);
-</script>
+    // Default votes
+    let defaultVotes = {
+      ahmedLikes: 1,
+      ahmedDislikes: 0,
+      halawaLikes: 1,
+      halawaDislikes: 0
+    };
+
+    function loadVotes() {
+      let votes = JSON.parse(localStorage.getItem('votes')) || defaultVotes;
+      document.getElementById('ahmedLikes').innerText = votes.ahmedLikes;
+      document.getElementById('ahmedDislikes').innerText = votes.ahmedDislikes;
+      document.getElementById('halawaLikes').innerText = votes.halawaLikes;
+      document.getElementById('halawaDislikes').innerText = votes.halawaDislikes;
+      return votes;
+    }
+
+    let votes = loadVotes();
+
+    function saveVotes() {
+      localStorage.setItem('votes', JSON.stringify(votes));
+    }
+
+    function like(person) {
+      if (person === 'ahmed') {
+        votes.ahmedLikes++;
+      } else if (person === 'halawa') {
+        votes.halawaLikes++;
+      }
+      saveVotes();
+      loadVotes();
+    }
+
+    function dislike(person) {
+      if (person === 'ahmed') {
+        votes.ahmedDislikes++;
+      } else if (person === 'halawa') {
+        votes.halawaDislikes++;
+      }
+      saveVotes();
+      loadVotes();
+    }
+
+    function resetVotes() {
+      if (confirm("Are you sure you want to reset all votes?")) {
+        votes = { ...defaultVotes };
+        saveVotes();
+        loadVotes();
+      }
+    }
+  </script>
 </body>
 </html>

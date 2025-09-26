@@ -1,299 +1,132 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Adam Ahmed vs Adam Halawa in Drums</title>
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-
+  <meta charset="utf-8"/>
+  <title>Adam Fix Store</title>
   <style>
-    :root{
-      --bg1:#0f1226;
-      --bg2:#1a1e3a;
-      --accent1:#8a5cff;
-      --accent2:#00e0ff;
-      --accent3:#ff4d8d;
-    }
-
-    * { box-sizing: border-box; }
-    html, body { height: 100%; margin: 0; scroll-behavior: smooth; }
     body {
-      background: linear-gradient(135deg, var(--bg1), var(--bg2));
-      color: #fff;
-      font-family: "Montserrat", sans-serif;
-      overflow-x: hidden;
+      margin:0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(270deg,#ff7eb3,#ff758c,#42a5f5,#7e57c2);
+      color: white; text-align:center; padding:20px;
     }
-
-    /* Background stars */
-    .stars {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      background: transparent;
-      overflow: hidden;
-      z-index: -2;
-    }
-    .stars span {
-      position: absolute;
-      display: block;
-      width: 2px;
-      height: 2px;
-      background: white;
-      opacity: 0.8;
-      border-radius: 50%;
-      animation: twinkle 2s infinite ease-in-out alternate;
-    }
-    @keyframes twinkle {
-      from { opacity: 0.2; }
-      to   { opacity: 1; }
-    }
-
-    /* Glowing rotating squares */
-    .squares {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: -1;
-    }
-    .squares div {
-      position: absolute;
-      width: 150px;
-      height: 150px;
-      border: 3px solid rgba(255,255,255,0.15);
-      transform: rotate(45deg);
-      animation: floatSquare 20s linear infinite;
-    }
-    .squares div:nth-child(1) {
-      top: -50px; left: -50px;
-      animation-duration: 25s;
-    }
-    .squares div:nth-child(2) {
-      top: 200px; right: -80px;
-      animation-duration: 35s;
-    }
-    .squares div:nth-child(3) {
-      bottom: -100px; left: 40%;
-      animation-duration: 30s;
-    }
-    @keyframes floatSquare {
-      from { transform: rotate(0deg) translateY(0); }
-      to   { transform: rotate(360deg) translateY(-50px); }
-    }
-
-    .wrapper {
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      position: relative;
-      z-index: 1;
-    }
-
-    .card {
-      position: relative;
-      padding: 3.5rem 2.25rem;
-      border-radius: 28px;
-      background: rgba(255,255,255,0.04);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.07);
-      text-align: center;
-      max-width: 900px;
-      width: min(92vw, 900px);
-      margin: 3rem auto;
-    }
-
-    h1 {
-      margin: 0 0 .6rem 0;
-      font-family: "Playfair Display", serif;
-      font-weight: 900;
-      font-size: clamp(2.2rem, 6vw, 5rem);
-      line-height: 1.05;
-    }
-
-    .name {
-      display: block;
-      background: linear-gradient(270deg, var(--accent1), var(--accent2), var(--accent3), var(--accent1));
-      background-size: 600% 600%;
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      margin: 0.5rem 0;
-      animation: shine 6s linear infinite;
-    }
-    @keyframes shine {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    .vs {
-      display: block;
-      font-weight: 700;
-      font-size: clamp(1.2rem, 3vw, 1.8rem);
-      letter-spacing: .35em;
-      text-transform: uppercase;
-      color: #e8ecff;
-      margin: 0.8rem 0;
-    }
-
-    p.tagline {
-      margin: 1.6rem 0 0;
-    }
-
-    .btn {
-      margin-top: 1rem;
-      padding: 0.9rem 1.8rem;
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: #fff;
-      border: none;
-      border-radius: 14px;
-      cursor: pointer;
-      background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
-    }
-
-    .more-info {
-      padding: 3rem 2rem;
-      max-width: 800px;
-      margin: 0 auto 4rem;
-      text-align: center;
-      background: rgba(255,255,255,0.05);
-      border-radius: 20px;
-    }
-
-    .like-btn, .dislike-btn, .reset-btn {
-      margin: 0.5rem;
-      padding: 0.6rem 1.2rem;
-      font-size: 1rem;
-      font-weight: 600;
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-
-    .like-btn {
-      background: linear-gradient(90deg, var(--accent2), var(--accent3));
-    }
-
-    .dislike-btn {
-      background: linear-gradient(90deg, #ff0000, #aa0000);
-    }
-
-    .reset-btn {
-      background: linear-gradient(90deg, #555, #222);
-    }
+    h1 { text-shadow:0 0 12px rgba(0,0,0,0.5); }
+    .items p { cursor:pointer; background:rgba(255,255,255,0.08); padding:12px; border-radius:8px; margin:8px auto; width:320px; color:yellow; }
+    form { display:none; margin:20px auto; background:rgba(0,0,0,0.45); padding:16px; width:360px; border-radius:10px; text-align:left; }
+    input, textarea, button { width:100%; padding:10px; margin:8px 0; border-radius:6px; border:none; font-size:14px; }
+    button { background:#42a5f5; color:#fff; cursor:pointer; }
+    button[disabled] { opacity:0.6; cursor:default; }
+    #status { margin-top:10px; font-size:14px; color:lightgreen; white-space:pre-line; }
+    #err { color:#ffb3b3; font-size:13px; margin-top:8px; white-space:pre-line; }
   </style>
 </head>
 <body>
-  <!-- Background Effects -->
-  <div class="stars"></div>
-  <div class="squares">
-    <div></div><div></div><div></div>
+  <h1>Adam Fix Store</h1>
+  <p>Click an item to fill the form</p>
+
+  <div class="items">
+    <p onclick="prefill('Calculator','987 EGP')">🧮 Calculator — 987 EGP</p>
+    <p onclick="prefill('Gun Toy','100 EGP')">🔫 Gun Toy — 100 EGP</p>
+    <p onclick="prefill('Toy Car','200 EGP')">🚗 Toy Car — 200 EGP</p>
+    <p onclick="prefill('Tie','50 EGP')">👔 Tie — 50 EGP</p>
   </div>
 
-  <div class="wrapper">
-    <div class="card">
-      <h1>
-        <span class="name">Adam Ahmed</span>
-        <span class="vs">VS</span>
-        <span class="name">Adam Halawa</span>
-        <div class="vs">in Drums 🥁</div>
-      </h1>
-      <p class="tagline">A showdown in spectacular, shimmering style ✨</p>
-      <a href="#more-info"><button class="btn">More Info</button></a>
-    </div>
-  </div>
+  <form id="orderForm">
+    <h2>Buy Item</h2>
+    <input type="hidden" name="item" id="item" />
+    <input type="hidden" name="cash" id="cash" />
+    <label>Your email</label>
+    <input type="email" name="user_email" id="user_email" required />
+    <label>Phone number</label>
+    <input type="text" name="number" required />
+    <label>Address</label>
+    <input type="text" name="address" required />
+    <label>Message / What happened</label>
+    <textarea name="message"></textarea>
+    <button id="submitBtn" type="submit">Buy</button>
+    <div id="status"></div>
+    <div id="err"></div>
+  </form>
 
-  <div id="more-info" class="more-info">
-    <h2>More Information</h2>
-    <p>
-      Adam Ahmed and Adam Halawa are seeing who is better in drums.  
-      Put a like on <strong>Adam Ahmed</strong> if you prefer him,  
-      but put a like on <strong>Adam Halawa</strong> if you prefer him.  
-      You can also dislike if you don’t prefer them.
-    </p>
-
-    <div>
-      <button class="like-btn" onclick="like('ahmed')">👍 Adam Ahmed (<span id="ahmedLikes">0</span>)</button>
-      <button class="dislike-btn" onclick="dislike('ahmed')">👎 (<span id="ahmedDislikes">0</span>)</button>
-    </div>
-
-    <div>
-      <button class="like-btn" onclick="like('halawa')">👍 Adam Halawa (<span id="halawaLikes">0</span>)</button>
-      <button class="dislike-btn" onclick="dislike('halawa')">👎 (<span id="halawaDislikes">0</span>)</button>
-    </div>
-
-    <div>
-      <button class="reset-btn" onclick="resetVotes()">🔄 Reset</button>
-    </div>
-  </div>
-
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script>
-    // Generate stars dynamically
-    const stars = document.querySelector('.stars');
-    for(let i=0; i<80; i++){
-      const star = document.createElement('span');
-      star.style.top = Math.random() * 100 + "%";
-      star.style.left = Math.random() * 100 + "%";
-      star.style.animationDuration = (Math.random() * 2 + 1) + "s";
-      stars.appendChild(star);
-    }
+    // ==== CONFIG (your values) ====
+    const EMAILJS_SERVICE = "service_fdy3h4j";
+    const EMAILJS_TEMPLATE = "template_s37d2qa";
+    const EMAILJS_PUBLIC_KEY = "h0dABymW32jwHiXli";
+    const FORMSPREE_ENDPOINT = "https://formspree.io/f/xjkenzwo";
 
-    // Default votes
-    let defaultVotes = {
-      ahmedLikes: 1,
-      ahmedDislikes: 0,
-      halawaLikes: 1,
-      halawaDislikes: 0
-    };
-
-    function loadVotes() {
-      let votes = JSON.parse(localStorage.getItem('votes')) || defaultVotes;
-      document.getElementById('ahmedLikes').innerText = votes.ahmedLikes;
-      document.getElementById('ahmedDislikes').innerText = votes.ahmedDislikes;
-      document.getElementById('halawaLikes').innerText = votes.halawaLikes;
-      document.getElementById('halawaDislikes').innerText = votes.halawaDislikes;
-      return votes;
-    }
-
-    let votes = loadVotes();
-
-    function saveVotes() {
-      localStorage.setItem('votes', JSON.stringify(votes));
-    }
-
-    function like(person) {
-      if (person === 'ahmed') {
-        votes.ahmedLikes++;
-      } else if (person === 'halawa') {
-        votes.halawaLikes++;
+    (function(){
+      try { 
+        emailjs.init(EMAILJS_PUBLIC_KEY); 
+        console.log("EmailJS initialized with public key"); 
+      } catch(e){ 
+        console.error("EmailJS init error:", e); 
       }
-      saveVotes();
-      loadVotes();
+    })();
+
+    function prefill(itemName, cashVal) {
+      document.getElementById("orderForm").style.display = "block";
+      document.getElementById("item").value = itemName;
+      document.getElementById("cash").value = cashVal;
+      document.getElementById("status").innerText = "";
+      document.getElementById("err").innerText = "";
     }
 
-    function dislike(person) {
-      if (person === 'ahmed') {
-        votes.ahmedDislikes++;
-      } else if (person === 'halawa') {
-        votes.halawaDislikes++;
-      }
-      saveVotes();
-      loadVotes();
-    }
+    document.getElementById("orderForm").addEventListener("submit", async function(ev){
+      ev.preventDefault();
+      const form = ev.target;
+      const submitBtn = document.getElementById("submitBtn");
+      const status = document.getElementById("status");
+      const errDiv = document.getElementById("err");
 
-    function resetVotes() {
-      if (confirm("Are you sure you want to reset all votes?")) {
-        votes = { ...defaultVotes };
-        saveVotes();
-        loadVotes();
+      submitBtn.disabled = true;
+      status.innerText = "⏳ Sending order…";
+      errDiv.innerText = "";
+
+      const formData = new FormData(form);
+
+      function finishSuccess(msg){
+        status.innerText = msg;
+        submitBtn.disabled = false;
+        form.reset();
+        form.style.display = "none";
       }
-    }
+      function finishError(msg){
+        status.innerText = "";
+        errDiv.innerText = msg;  // 🛑 keep error visible
+        submitBtn.disabled = false;
+      }
+
+      try {
+        const res = await emailjs.sendForm(EMAILJS_SERVICE, EMAILJS_TEMPLATE, form);
+        console.log("EmailJS success:", res);
+        finishSuccess("✅ Order sent! Confirmation email should arrive shortly.");
+        return;
+      } catch (emailErr) {
+        console.error("EmailJS failed:", emailErr);
+        finishError("⚠️ EmailJS failed. See console for details. Trying Formspree fallback…");
+      }
+
+      try {
+        const resp = await fetch(FORMSPREE_ENDPOINT, {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        });
+        const text = await resp.text();
+        console.log("Formspree response:", resp.status, text);
+        if (resp.ok) {
+          finishSuccess("✅ Order saved via Formspree fallback.");
+        } else {
+          finishError("❌ Formspree failed (status " + resp.status + "). Check console.");
+        }
+      } catch (fetchErr) {
+        console.error("Formspree fetch error:", fetchErr);
+        finishError("❌ Both EmailJS and Formspree failed. See console for details.");
+      }
+    });
   </script>
 </body>
 </html>

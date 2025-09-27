@@ -16,7 +16,7 @@
     input, textarea, button { width:100%; padding:10px; margin:8px 0; border-radius:6px; border:none; font-size:14px; }
     button { background:#42a5f5; color:#fff; cursor:pointer; }
     button[disabled] { opacity:0.6; cursor:default; }
-    #status { margin-top:10px; font-size:14px; color:lightgreen; white-space:pre-line; }
+    #status { margin-top:10px; font-size:15px; color:#0f0; font-weight:bold; }
     #err { color:#ffb3b3; font-size:13px; margin-top:8px; white-space:pre-line; }
   </style>
 </head>
@@ -38,11 +38,11 @@
     <label>Your email</label>
     <input type="email" name="user_email" id="user_email" required />
     <label>Phone number</label>
-    <input type="text" name="number" required />
+    <input type="text" name="number" id="number" required />
     <label>Address</label>
-    <input type="text" name="address" required />
+    <input type="text" name="address" id="address" required />
     <label>Message / What happened</label>
-    <textarea name="message"></textarea>
+    <textarea name="message" id="message"></textarea>
     <button id="submitBtn" type="submit">Buy</button>
     <div id="status"></div>
     <div id="err"></div>
@@ -51,20 +51,12 @@
   <!-- EmailJS -->
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script>
-    // ==== CONFIG (your values) ====
     const EMAILJS_SERVICE = "service_fdy3h4j";
     const EMAILJS_TEMPLATE = "template_s37d2qa";
     const EMAILJS_PUBLIC_KEY = "h0dABymW32jwHiXli";
     const FORMSPREE_ENDPOINT = "https://formspree.io/f/xjkenzwo";
 
-    (function(){
-      try { 
-        emailjs.init(EMAILJS_PUBLIC_KEY); 
-        console.log("EmailJS initialized with public key"); 
-      } catch(e){ 
-        console.error("EmailJS init error:", e); 
-      }
-    })();
+    (function(){ emailjs.init(EMAILJS_PUBLIC_KEY); })();
 
     function prefill(itemName, cashVal) {
       document.getElementById("orderForm").style.display = "block";
@@ -72,7 +64,42 @@
       document.getElementById("cash").value = cashVal;
       document.getElementById("status").innerText = "";
       document.getElementById("err").innerText = "";
+      saveForm(); // keep saved
     }
+
+    // Save form data to localStorage
+    function saveForm() {
+      const formData = {
+        user_email: document.getElementById("user_email").value,
+        number: document.getElementById("number").value,
+        address: document.getElementById("address").value,
+        message: document.getElementById("message").value,
+        item: document.getElementById("item").value,
+        cash: document.getElementById("cash").value
+      };
+      localStorage.setItem("adamfix_form", JSON.stringify(formData));
+    }
+
+    // Load saved data
+    function loadForm() {
+      const saved = localStorage.getItem("adamfix_form");
+      if (saved) {
+        const data = JSON.parse(saved);
+        document.getElementById("user_email").value = data.user_email || "";
+        document.getElementById("number").value = data.number || "";
+        document.getElementById("address").value = data.address || "";
+        document.getElementById("message").value = data.message || "";
+        document.getElementById("item").value = data.item || "";
+        document.getElementById("cash").value = data.cash || "";
+        if (data.item) document.getElementById("orderForm").style.display = "block";
+      }
+    }
+
+    loadForm();
+
+    document.querySelectorAll("#orderForm input, #orderForm textarea").forEach(el => {
+      el.addEventListener("input", saveForm);
+    });
 
     document.getElementById("orderForm").addEventListener("submit", async function(ev){
       ev.preventDefault();
@@ -88,25 +115,22 @@
       const formData = new FormData(form);
 
       function finishSuccess(msg){
-        status.innerText = msg;
+        status.innerText = "✅ Order placed! Please check your email for confirmation.";
         submitBtn.disabled = false;
-        form.reset();
-        form.style.display = "none";
+        localStorage.removeItem("adamfix_form"); // clear saved after success
       }
       function finishError(msg){
         status.innerText = "";
-        errDiv.innerText = msg;  // 🛑 keep error visible
+        errDiv.innerText = msg;
         submitBtn.disabled = false;
       }
 
       try {
-        const res = await emailjs.sendForm(EMAILJS_SERVICE, EMAILJS_TEMPLATE, form);
-        console.log("EmailJS success:", res);
-        finishSuccess("✅ Order sent! Confirmation email should arrive shortly.");
+        await emailjs.sendForm(EMAILJS_SERVICE, EMAILJS_TEMPLATE, form);
+        finishSuccess();
         return;
       } catch (emailErr) {
-        console.error("EmailJS failed:", emailErr);
-        finishError("⚠️ EmailJS failed. See console for details. Trying Formspree fallback…");
+        finishError("⚠️ EmailJS failed. Trying Formspree fallback…");
       }
 
       try {
@@ -115,16 +139,13 @@
           body: formData,
           headers: { 'Accept': 'application/json' }
         });
-        const text = await resp.text();
-        console.log("Formspree response:", resp.status, text);
         if (resp.ok) {
-          finishSuccess("✅ Order saved via Formspree fallback.");
+          finishSuccess();
         } else {
-          finishError("❌ Formspree failed (status " + resp.status + "). Check console.");
+          finishError("❌ Formspree failed.");
         }
       } catch (fetchErr) {
-        console.error("Formspree fetch error:", fetchErr);
-        finishError("❌ Both EmailJS and Formspree failed. See console for details.");
+        finishError("❌ Both EmailJS and Formspree failed.");
       }
     });
   </script>
